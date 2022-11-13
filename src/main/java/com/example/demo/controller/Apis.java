@@ -18,20 +18,20 @@ public class Apis {
     @Autowired
     QuestionService questionService;
 
-    @GetMapping("/signup")
-    public String signup(String login , String password){
-        User user = new User(login, password);
-        return userService.createUser(user);
+    @PostMapping("/signup")
+    public String signup(@RequestBody User user){
+        User user1 = new User(user.getLogin(), user.getPassword());
+        return userService.createUser(user1);
     }
 
-    @GetMapping("/login")
-    public String login(String login, String password){
-        return userService.login(login, password);
+    @PostMapping("/login")
+    public String login(@RequestBody User user){
+        return userService.login(user.getLogin(), user.getPassword());
     }
 
-    @GetMapping("/ask")
-    public String ask(String question, Long userid){
-        Question q = new Question(question, userid);
+    @PostMapping("/ask")
+    public String ask(@RequestBody Question question){
+        Question q = new Question(question.getQuestion(), question.getUserid());
         questionService.createQuestion(q);
         return "Question created";
     }
@@ -39,6 +39,4 @@ public class Apis {
     public List<Question> myQuestions(@PathVariable(value = "id") Long userid){
         return questionService.usersQuestions(userid);
     }
-
-
 }
