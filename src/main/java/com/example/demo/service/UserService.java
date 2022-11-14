@@ -24,7 +24,7 @@ public class UserService {
     public String login(String login, String password){
         if(userRepository.findByLoginAndPassword(login, password) != null){
 
-            return "Userid is:" + userRepository.findByLoginAndPassword(login, password).getUserid();
+            return userRepository.findByLoginAndPassword(login, password).getUserid();
         }
         else{
             return "Inccorrect password or login";
